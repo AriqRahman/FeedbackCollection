@@ -1,0 +1,62 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                <table class="table">
+
+
+
+                    @if (Model.distinctPostIdList != null && Model.distinctPostIdList.Count > 0)
+                    {
+                        foreach (var distinctItem in Model.distinctPostIdList)
+                        {
+                            
+                            <tr>
+                                <th>@distinctItem.postName</th>
+                                <th>Admin</th>
+                                <th>@distinctItem.createdDate.ToString("dd-MM-yyyy")</th>
+                                <th>@Model.postList.Where(x => x.postId == distinctItem.postId).ToList().Count Comments</th>
+                            </tr>
+
+
+                            if (Model.postList.Where(x => x.postId == distinctItem.postId).ToList().Count > 0)
+                            {
+                                foreach (var item in Model.postList.Where(x => x.postId == distinctItem.postId).ToList())
+                                {
+                                    <tr>
+                                        <td>@item.postComments</td>
+                                        <td>@item.userName</td>
+                                        <td>@item.createdDate.ToString("dd-MM-yyyy")</td>
+                                        <td>
+                                            ↑ @item.likeCount
+                                            &nbsp;
+                                            ↓ @item.dislikeCount
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </table>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
